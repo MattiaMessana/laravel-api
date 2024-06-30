@@ -17,7 +17,7 @@
             <li><strong>Technologie:</strong> </li>
             
             @foreach ($project->technologies as $tech)
-            <li class="mt-2-"> {{ $tech->name}}</li>
+            <li class="px-2"> {{ $tech->name}}</li>
             @endforeach
 
             <li class="mb-3"><strong>Descrizione:</strong> {{ $project->description }}</li>
@@ -25,6 +25,7 @@
             <li class="mb-3"><strong>Slug:</strong> {{ $project->slug }}</li>
         </ul>
         <ul class="d-flex gap-2">
+            <li><a class="btn btn-primary" href="{{ route('admin.project.index') }}"><i class="fa-solid fa-hand-point-left fa-lg"></i></a></li>
             <li><a class="btn btn-warning" href="{{ route('admin.project.edit', $project) }}"><i
                         class="fa-solid fa-marker fa-lg"></i></a></li>
             <li>@include('admin.project.partials.delete-project-form')</li>

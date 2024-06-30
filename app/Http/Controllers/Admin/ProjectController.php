@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\Project;
 use App\Models\Technology;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -20,7 +21,9 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->per_page ? $request->per_page : 10;
-        $projectArray = Project::paginate($perPage)->appends(['per_page' => $perPage]);
+        $user = Auth::id();
+        // utilizzare la virgola serve per confrontare i due valori ->(potremmo fare anche cosi)->('user_id' , '=' , $user)
+        $projectArray = Project::where('user_id', $user )->paginate($perPage)->appends(['per_page' => $perPage]);
         return view('admin.project.index', compact('projectArray'));
     }
 
