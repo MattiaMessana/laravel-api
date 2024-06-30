@@ -18,4 +18,8 @@ class Project extends Model
     public function technologies() {
         return $this->belongsToMany('App\Models\Technology');
     }
+
+    public function user() {
+        return $this->belongsTo(User::class);
+    }    
 }
