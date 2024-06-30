@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
+use function Laravel\Prompts\error;
+
 class ProjectController extends Controller
 {
     /**
@@ -59,6 +61,7 @@ class ProjectController extends Controller
         // dd($request->all(), $data, $project);
         $project->save();
 
+        //aggiungo le tecg se sono state selezionate
         if ($request->has('technologies')) {
             $project->technologies()->attach($request->technologies);
         }
@@ -71,7 +74,9 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        
+        if ($project->user_id !== Auth::id()) {
+            abort(404);
+        }
         return view('admin.project.show' , compact('project'));
     }
 
@@ -80,6 +85,10 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+        if ($project->user_id !== Auth::id()) {
+            abort(404);
+        }
+
         $categories = Category::all();
         $technologies = Technology::all();
         
@@ -91,6 +100,10 @@ class ProjectController extends Controller
      */
     public function update(UpdateProjectRequest $request, Project $project)
     {
+        if ($project->user_id !== Auth::id()) {
+            abort(404);
+        }
+
         // $data = $request->all();
         $data = $request->validated();
         $data['slug'] = Str::slug($data['title']);
@@ -120,6 +133,10 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+        if ($project->user_id !== Auth::id()) {
+            abort(404);
+        }
+
         //se il project ha immagine la cancelliamo dallo storage
         if ($project->cover_img) {
             Storage::delete($project->cover_img);

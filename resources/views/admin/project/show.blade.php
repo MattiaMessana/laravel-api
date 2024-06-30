@@ -17,7 +17,7 @@
             <li><strong>Technologie:</strong> </li>
             
             @foreach ($project->technologies as $tech)
-            <li class="px-2"> {{ $tech->name}}</li>
+            <li class="px-2 mb-3"> {{ $tech->name}}</li>
             @endforeach
 
             <li class="mb-3"><strong>Descrizione:</strong> {{ $project->description }}</li>
