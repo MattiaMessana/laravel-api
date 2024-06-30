@@ -36,7 +36,10 @@
         </button>
       </div>
       <div class="navbar-nav">
-        <div class="nav-item text-nowrap ms-2">
+        <div class="nav-item text-nowrap ms-2 d-flex align-items-center">
+          <div class="text-light me-4">
+              Ciao {{Auth::user()->name}}
+          </div>
           <a class="nav-link" href="{{ route('logout') }}"
             onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">

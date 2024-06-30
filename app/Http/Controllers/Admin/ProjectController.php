@@ -45,8 +45,9 @@ class ProjectController extends Controller
     public function store(StoreProjectRequest $request)
     {
         // $data = $request->all();
-
         $data = $request->validated();
+        $data['user_id'] = Auth::id();
+
         //controlliamo se esiste il file cover_img nel request
         if ($request->hasFile('cover_img')) {
             //salvo file nella cartella storage
