@@ -62,7 +62,15 @@
                 <input type="file" name="cover_img" id="cover_img" class="form-control">
             </div>
 
-            <button class="btn btn-success" type="submit"><i class="fa-solid fa-floppy-disk fa-lg"></i></button>
+            <ul class="d-flex gap-2">
+                <li class="mt-2">
+                    <a class="btn btn-primary" href="{{ route('admin.project.index') }}"><i class="fa-solid fa-hand-point-left fa-lg"></i></a>
+                </li>
+
+                <li>
+                <button class="btn btn-success mt-2" type="submit"><i class="fa-solid fa-floppy-disk fa-lg"></i></button>
+                </li>
+            </ul>
         </form>
     </div>
     
