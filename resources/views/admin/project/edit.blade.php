@@ -77,18 +77,18 @@
                 <input type="checkbox" id="removeImage" name="removeImage">
             @endif
 
+            {{-- button add and remove --}}
+            <div>
+                <button class="btn btn-success mt-3 w-25" type="submit">Aggiorna</button>
+                <a id="btnDelete" class="btn btn-danger mt-3 hide w-25">Rimuovi</a>
+            </div>
+            {{-- /button add and remove --}}
+
             <div class="my-3">
                 <h4>Preview Immagine</h4>
                 <img id="oldImg" class="w-25" src="{{ asset('storage/' . $project->cover_img) }}" alt="">
                 <img id="imagePreview" class="hide" src="" alt="">
             </div>
-
-            {{-- button add and remove --}}
-            <div>
-                <button class="btn btn-success mt-3 w-25" type="submit">Aggiorna</button>
-                <a id="btnDelete" class="btn btn-danger mt-3 hide w-25">rimuovi</a>
-            </div>
-            {{-- /button add and remove --}}
 
             <ul class="d-flex gap-2">
                 <li class="mt-2">
