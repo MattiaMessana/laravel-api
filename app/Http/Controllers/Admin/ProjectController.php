@@ -25,7 +25,7 @@ class ProjectController extends Controller
         $perPage = $request->per_page ? $request->per_page : 10;
         $user = Auth::id();
         // utilizzare la virgola serve per confrontare i due valori ->(potremmo fare anche cosi)->('user_id' , '=' , $user)
-        $projectArray = Project::where('user_id', $user )->paginate($perPage)->appends(['per_page' => $perPage]);
+        $projectArray = Project::where('user_id', $user)->paginate($perPage)->appends(['per_page' => $perPage]);
         return view('admin.project.index', compact('projectArray'));
     }
 
@@ -51,7 +51,7 @@ class ProjectController extends Controller
         //controlliamo se esiste il file cover_img nel request
         if ($request->hasFile('cover_img')) {
             //salvo file nella cartella storage
-            $image_path = Storage::put('project_img' , $request->cover_img);
+            $image_path = Storage::put('project_img', $request->cover_img);
             //salvo path del file da inserire nel databade
             $data['cover_img'] = $image_path;
         }
@@ -78,7 +78,7 @@ class ProjectController extends Controller
         if ($project->user_id !== Auth::id()) {
             abort(404);
         }
-        return view('admin.project.show' , compact('project'));
+        return view('admin.project.show', compact('project'));
     }
 
     /**
@@ -92,8 +92,8 @@ class ProjectController extends Controller
 
         $categories = Category::all();
         $technologies = Technology::all();
-        
-        return view('admin.project.edit' , compact('project' , 'categories', 'technologies'));
+
+        return view('admin.project.edit', compact('project', 'categories', 'technologies'));
     }
 
     /**
@@ -101,10 +101,11 @@ class ProjectController extends Controller
      */
     public function update(UpdateProjectRequest $request, Project $project)
     {
+        
         if ($project->user_id !== Auth::id()) {
             abort(404);
         }
-
+        // dd($request['removeImage']);
         // $data = $request->all();
         $data = $request->validated();
         $data['slug'] = Str::slug($data['title']);
@@ -116,17 +117,30 @@ class ProjectController extends Controller
                 //cancello vecchia immagine
                 Storage::delete($project->cover_img);
             }
+
             //salvo nuova immagine
-            $image_path = Storage::put('project_img' , $request->cover_img);
+            $image_path = Storage::put('project_img', $request->cover_img);
             //salvo il nuvo path nel database
             $data['cover_img'] = $image_path;
         }
+
+
+        // remove image without add other
+        if ($request['removeImage'] != NULL && $project->cover_img != NULL) {
+            // dd($request->all());
+            Storage::delete($project->cover_img);
+            $project->cover_img = NULL;
+        }
+        // /remove image without add other
+
+
+        // dd($request['removeImage']);
 
         $project->update($data);
 
         $project->technologies()->sync($request->technologies);
 
-        return redirect()->route('admin.project.show' , ['project' => $project->slug])->with('message' , 'Proggetto ' .$project->title. ' è stato modificato');
+        return redirect()->route('admin.project.show', ['project' => $project->slug])->with('message', 'Proggetto ' . $project->title . ' è stato modificato');
     }
 
     /**
@@ -145,6 +159,6 @@ class ProjectController extends Controller
 
         $project->technologies()->detach();
         $project->delete();
-        return redirect()->route('admin.project.index')->with('message', 'Proggetto ' .$project->title.' è stato eliminato');
+        return redirect()->route('admin.project.index')->with('message', 'Proggetto ' . $project->title . ' è stato eliminato');
     }
 }
