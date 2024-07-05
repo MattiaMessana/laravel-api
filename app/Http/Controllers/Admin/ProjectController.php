@@ -22,17 +22,18 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     {
-        $perPage = $request->per_page ? $request->per_page : 10;
+        $perPage = $request->per_page ? $request->per_page : 5;
         $user = Auth::id();
         // utilizzare la virgola serve per confrontare i due valori ->(potremmo fare anche cosi)->('user_id' , '=' , $user)
         $projectArray = Project::where('user_id', $user)->paginate($perPage)->appends(['per_page' => $perPage]);
+        // dd($projectArray);
         return view('admin.project.index', compact('projectArray'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Project $project)
     {
         $categories = Category::all();
         $technologies = Technology::all();

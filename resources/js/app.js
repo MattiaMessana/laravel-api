@@ -5,6 +5,8 @@ import '@fortawesome/fontawesome-free/js/all.min.js';
 import.meta.glob(["../img/**"]);
 
 
+// MODALE CANCELLAZZIONE
+
 //trovo tutti i bottoni di cancellazzione 
 const deleteBtns = document.querySelectorAll('.delete-form button');
 
@@ -33,31 +35,39 @@ if (deleteBtns.length > 0) {
     })
 }
 
+
+// PREVIEW IMAGE
+
 const oldImgElem = document.getElementById('oldImg')
 const imgElem = document.getElementById('imagePreview');
 const inputElem = document.getElementById('cover_img');
 const btnDeleteElem = document.getElementById('btnDelete');
 
+if (imgElem && oldImgElem) {
+    inputElem.addEventListener('change', function(e) {
+        e.preventDefault();
+        //istanza nuovo ogetto filerieder(è un api che ha dei motodi per leggere contenuto file)
+        const reader = new FileReader();
+        reader.onload = function() {
+            imgElem.src = reader.result;
+            imgElem.classList.remove('hide');
+            oldImgElem.classList.add('hide');
+            btnDeleteElem.classList.remove('hide');
+        };
+        // convert string in url for direcory image
+        reader.readAsDataURL(e.target.files[0]);
+    
+    });
 
-inputElem.addEventListener('change', function(e) {
-    e.preventDefault();
-    //istanza nuovo ogetto filerieder(è un api che ha dei motodi per leggere contenuto file)
-    const reader = new FileReader();
-    reader.onload = function() {
-        imgElem.src = reader.result;
-        imgElem.classList.remove('hide');
-        oldImgElem.classList.add('hide');
-        btnDeleteElem.classList.remove('hide');
-    };
-    // convert string in url for direcory image
-    reader.readAsDataURL(e.target.files[0]);
 
-});
+    btnDeleteElem.addEventListener('click', function(e) {
+        e.preventDefault();
+        btnDeleteElem.classList.add('hide');
+        imgElem.classList.add('hide');
+        oldImgElem.classList.remove('hide');
+        inputElem.value = "";
+    });
 
-btnDeleteElem.addEventListener('click', function(e) {
-    e.preventDefault();
-    btnDeleteElem.classList.add('hide');
-    imgElem.classList.add('hide');
-    oldImgElem.classList.remove('hide');
-    inputElem.value = "";
-})
+
+}
+

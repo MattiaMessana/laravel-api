@@ -75,7 +75,6 @@
             @if ($project->cover_img !== null)
                 <label for="removeImage">Rimuovi immagine :</label>
                 <input type="checkbox" id="removeImage" name="removeImage">
-            @endif
 
             {{-- button add and remove --}}
             <div>
@@ -83,6 +82,8 @@
                 <a id="btnDelete" class="btn btn-danger mt-3 hide w-25">Rimuovi</a>
             </div>
             {{-- /button add and remove --}}
+            @endif
+
 
             <div class="my-3">
                 <h4>Preview Immagine</h4>
