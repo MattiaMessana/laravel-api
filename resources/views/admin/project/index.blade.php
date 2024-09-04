@@ -54,8 +54,7 @@
                         <td>{{ $project->user?->name }}</td>
                         <td>{{ $project->description }}</td>
                         <td>{{ $project->slug }}</td>
-                        <td> <a href="{{ route('admin.project.show', $project) }}"><i
-                                    class="fa-solid fa-ellipsis-vertical fa-2xl"></i></a></td>
+                        <td><a href="{{ route('admin.project.show', $project) }}"><i class="fa-solid fa-list fa-2xl"></i></a></td>
                         <td><a class="btn btn-warning" href="{{ route('admin.project.edit', $project) }}"><i
                                     class="fa-solid fa-marker fa-lg"></i></a></td>
                         <td>@include('admin.project.partials.delete-project-form')</td>

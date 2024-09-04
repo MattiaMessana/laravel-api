@@ -37,7 +37,7 @@ class ProjectController extends Controller
     {
         $categories = Category::all();
         $technologies = Technology::all();
-        return view('admin.project.create', compact('categories', 'technologies'));
+        return view('admin.project.create', compact('categories', 'technologies', 'project'));
     }
 
     /**
