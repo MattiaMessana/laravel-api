@@ -63,7 +63,7 @@ class ProjectController extends Controller
         // dd($request->all(), $data, $project);
         $project->save();
 
-        //aggiungo le tecg se sono state selezionate
+        //aggiungo le tech se sono state selezionate
         if ($request->has('technologies')) {
             $project->technologies()->attach($request->technologies);
         }
